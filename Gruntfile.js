@@ -17,19 +17,29 @@ module.exports = function (grunt) {
             },
             dev: {
                 files: {
-                    "bin/public/js/templates.js": "shared/views/**/*.hbs"
+                    "bin/public/js/templates.js": "common/views/**/*.hbs"
                 }
             }
         },
 
         watch: {
             templates: {
-                files: ['shared/views/**/*.hbs'],
-                tasks: ['handlebars:dev']
+                files: ['common/views/**/*.hbs'],
+                tasks: ['handlebars:dev'],
+                options: {
+                    livereload: true
+                }
             },
             mocha: {
                 files: ['server/**/*.js', 'tests/specs/server/**/*-spec.js'],
                 tasks: ['mochaTest']
+            },
+            less: {
+                files: ['client/less/**/*.less'],
+                tasks: ['less'],
+                options: {
+                    livereload: true
+                }
             }
         },
 
@@ -40,6 +50,14 @@ module.exports = function (grunt) {
                 },
                 src: ['tests/specs/server/**/*-spec.js']
             }
+        },
+
+        less: {
+            dev: {
+                files: {
+                    "bin/public/css/style.css": "client/less/style.less"
+                }
+            }
         }
     });
 
@@ -49,4 +67,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-contrib-handlebars');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-less');
 }
