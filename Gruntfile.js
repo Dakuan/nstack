@@ -40,6 +40,12 @@ module.exports = function (grunt) {
                 options: {
                     livereload: true
                 }
+            },
+            client: {
+                files: ['client/js/**/*.js'],
+                options: {
+                    livereload: true
+                }
             }
         },
 
