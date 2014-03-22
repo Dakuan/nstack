@@ -1,21 +1,18 @@
 var express = require('express'),
     hbs = require('express-hbs'),
     path = require('path'),
+    static = require('./middleware/static'),    
+    routes = require('./routes'),
     app = express();
 
 app.engine('hbs', hbs.express3({}));
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, '../shared/views'));
+app.set('views', path.join(__dirname, '../common/views'));
 
-app.use("/public", express.static(__dirname + "/public"));
-app.use("/js", express.static(path.join(__dirname, '../bin/public/js')));
-app.use("/js", express.static(path.join(__dirname, '../client')));
+// middleware
+static(app);
 
-app.get('/', function (req, res) {
-    res.render('thing', {
-        thing: 'bob',
-        layout: 'layout/index'
-    });
-});
+// routes
+routes(app);
 
 app.listen(5000);
